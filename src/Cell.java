@@ -1,20 +1,18 @@
 public class Cell {
 
     private boolean occupied;
-    private boolean watched;
     private int watchCount = 0;
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Cell(int x, int y, boolean occupied, boolean watched) {
+    public Cell(int x, int y, boolean occupied) {
         this(x, y);
         this.occupied = occupied;
-        this.watched = watched;
     }
 
     public boolean isOccupied() {
@@ -42,20 +40,10 @@ public class Cell {
     }
 
     public void setWatched() {
-        this.watched = true;
         watchCount++;
     }
 
     public void resetWatched() {
-        this.watched = false;
         watchCount = Math.max(watchCount - 1, 0);
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 }

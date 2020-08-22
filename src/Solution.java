@@ -2,17 +2,9 @@ import java.util.List;
 
 public class Solution {
 
-    private List<Cell> cells;
+    private final List<Cell> cells;
 
     public Solution(List<Cell> cells) {
-        this.cells = cells;
-    }
-
-    public List<Cell> getCells() {
-        return cells;
-    }
-
-    public void setCells(List<Cell> cells) {
         this.cells = cells;
     }
 

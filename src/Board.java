@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-    private Cell[][] cells;
+    private final Cell[][] cells;
     int n;
-    private List<Solution> solutions = new ArrayList<>();
+    private final List<Solution> solutions = new ArrayList<>();
 
     public Board() {
         this(8);
@@ -54,7 +54,7 @@ public class Board {
         List<Cell> currentSolution = Arrays.stream(cells)
                 .flatMap(Arrays::stream)
                 .filter(Cell::isOccupied)
-                .map(cell -> new Cell(cell.getX(), cell.getY(), true, true))
+                .map(cell -> new Cell(cell.getX(), cell.getY(), true))
                 .collect(Collectors.toList());
         Solution solution = new Solution(currentSolution);
         solutions.add(solution);
