@@ -13,9 +13,8 @@ public class AppSolver {
             Board board = new Board(n);
             List<Solution> solutions = board.findSolutions();
 
-            for (Solution solution : solutions) {
-                solution.print();
-            }
+            solutions.stream().limit(10)
+                    .forEach(Solution::print);
 
             System.out.println("Enter N:");
             n = scanner.nextInt();

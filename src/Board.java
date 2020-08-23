@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -39,13 +40,13 @@ public class Board {
         }
         for (int i = 0; i < n; i++) {
             if (!cells[rowIndex][i].isWatched()) {
-                insertInPosition(rowIndex, i);
+                setIn(rowIndex, i);
                 if (rowIndex == n - 1) {
                     storeCurrentSolution();
                 } else {
                     findQueenPositionInRow(rowIndex + 1);
                 }
-                resetPosition(rowIndex, i);
+                resetIn(rowIndex, i);
             }
         }
     }
@@ -61,92 +62,50 @@ public class Board {
 
     }
 
-    public void insertInPosition(int x, int y) {
+    public void updateDiagonals(int x, int y, Consumer<Cell>consumer) {
+        int i0 = Math.max(x-y, 0);
+        int j0 = Math.max(y-x, 0);
+        for (int i = i0, j = j0; i < n && j < n; i++, j++) {
+            if (i != x) {
+                consumer.accept(cells[i][j]);
+            }
+        }
+
+        int i1 = Math.min(x + y, n - 1);
+        int j1 = Math.max(y - (n-1-x), 0);
+        for (int i = i1, j = j1; i >= 0 && j < n; i--, j++) {
+            if (i != x) {
+                consumer.accept(cells[i][j]);
+            }
+        }
+    }
+
+    public void updateRows(int x, int y, Consumer<Cell> cellConsumer) {
+        for (int i = 0; i < n; i++) {
+            if (i != y) {
+                cellConsumer.accept(cells[x][i]);
+            }
+            if (i != x) {
+                cellConsumer.accept(cells[i][y]);
+            }
+        }
+    }
+
+    public void setIn(int x, int y) {
         Cell cell = cells[x][y];
         cell.setOccupied();
         cell.setWatched();
-        for (int i = 0; i < n; i++) {
-            if (i != y) {
-                cells[x][i].setWatched();
-            }
-            if (i != x) {
-                cells[i][y].setWatched();
-            }
-        }
-        int i = x - 1, j = y - 1;
-        while (i >= 0 && j >= 0) {
-            cells[i][j].setWatched();
-            i--;
-            j--;
-        }
-        i = x + 1;
-        j = y + 1;
-        while (i < n && j < n) {
-            cells[i][j].setWatched();
-            i++;
-            j++;
-        }
-
-        i = x + 1;
-        j = y - 1;
-        while (i < n && j >= 0) {
-            cells[i][j].setWatched();
-            i++;
-            j--;
-        }
-
-        i = x - 1;
-        j = y + 1;
-        while (i >= 0 && j < n) {
-            cells[i][j].setWatched();
-            i--;
-            j++;
-        }
+        updateRows(x, y, Cell::setWatched);
+        updateDiagonals(x, y, Cell::setWatched);
     }
 
-    public void resetPosition(int x, int y) {
+    public void resetIn(int x, int y) {
         Cell cell = cells[x][y];
         cell.resetOccupied();
         cell.resetWatched();
-        for (int i = 0; i < n; i++) {
-            if (i != y) {
-                cells[x][i].resetWatched();
-            }
-            if (i != x) {
-                cells[i][y].resetWatched();
-            }
-        }
-        int i = x - 1, j = y - 1;
-        while (i >= 0 && j >= 0) {
-            cells[i][j].resetWatched();
-            i--;
-            j--;
-        }
-        i = x + 1;
-        j = y + 1;
-        while (i < n && j < n) {
-            cells[i][j].resetWatched();
-            i++;
-            j++;
-        }
-
-        i = x + 1;
-        j = y - 1;
-        while (i < n && j >= 0) {
-            cells[i][j].resetWatched();
-            i++;
-            j--;
-        }
-
-        i = x - 1;
-        j = y + 1;
-        while (i >= 0 && j < n) {
-            cells[i][j].resetWatched();
-            i--;
-            j++;
-        }
+        updateRows(x, y, Cell::resetWatched);
+        updateDiagonals(x, y, Cell::resetWatched);
     }
-
 
     public void print() {
 
@@ -164,7 +123,17 @@ public class Board {
             }
             System.out.print((n - i));
         }
-        System.out.print("\n\ta b c d e f g h");
 
+        System.out.print("\n\t");
+        char c = 'a';
+        String prefix = "";
+        for (int i = 0; i < n; i++) {
+            if (i> 0 && i % 26 == 0) {
+                c = 'a';
+                prefix = "a";
+            }
+            System.out.print(prefix + c + " ");
+            c++;
+        }
     }
 }

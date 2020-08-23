@@ -11,7 +11,7 @@ public class Solution {
     public void print() {
         Board board = new Board(cells.size());
         for (Cell cell : cells) {
-            board.insertInPosition(cell.getX(), cell.getY());
+            board.setIn(cell.getX(), cell.getY());
         }
 
         board.print();
