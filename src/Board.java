@@ -10,10 +10,6 @@ public class Board {
     int n;
     private final List<Solution> solutions = new ArrayList<>();
 
-    public Board() {
-        this(8);
-    }
-
     public Board(int n) {
         this.n = n;
         cells = generateCells(n);
@@ -110,7 +106,6 @@ public class Board {
     public void print() {
 
         System.out.println();
-
         for (int i = 0; i < n; i++) {
             System.out.println();
             System.out.print("\t");

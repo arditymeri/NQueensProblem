@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,8 +13,15 @@ public class AppSolver {
         while (n > 0) {
             Board board = new Board(n);
             List<Solution> solutions = board.findSolutions();
+            System.out.println(solutions.size() + " solutions found.");
+            // Let's not print everything
 
-            solutions.stream().limit(10)
+            System.out.println("The first 5 solutions");
+            solutions.stream().limit(5)
+                    .forEach(Solution::print);
+            Collections.shuffle(solutions);
+            System.out.println("Some other solutions selected randomly");
+            solutions.stream().limit(5)
                     .forEach(Solution::print);
 
             System.out.println("Enter N:");
