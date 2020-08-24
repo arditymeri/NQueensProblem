@@ -4,17 +4,18 @@ Here is a solution to the [N-Queens Problem](https://en.wikipedia.org/wiki/Eight
 
 ## How to run
 
-Start the `AppSolver` class as a Java application. Enter the board size 
-Enter `-1` to exit. 
+Start the `AppSolver` class as a Java application. Enter the board size or `-1` to exit. 
 
 The application prints the total number of solutions, the first 5 solutions, and 5 other random ones. 
-Queen positions are denoted with `X`, empty positions with `0`.
+Queen positions are denoted by `X`, empty positions by `0`.
 Here is an execution example:
 
 ```
 N-Queens Problem Solver
 Enter N:
 15
+2279184 solutions found.
+The first 5 solutions
 
 
 	X 0 0 0 0 0 0 0 0 0 0 0 0 0 0 15
@@ -34,4 +35,5 @@ Enter N:
 	0 0 0 0 0 0 0 X 0 0 0 0 0 0 0 1
 	a b c d e f g h i j k l m n o 
 	================
+...
 ```
